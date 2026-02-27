@@ -6,7 +6,6 @@ import {
   CheckCircle,
 } from 'lucide-react'
 import { supabase } from '../lib/supabase'
-import { useAuth } from '../contexts/AuthContext'
 import type { Campaign, CampaignProspect, Variant, Prospect } from '../types/campaign'
 
 interface Props {
@@ -52,7 +51,6 @@ export default function ComposeScheduleTab({
   campaignProspects,
   onCampaignUpdate,
 }: Props) {
-  const { user } = useAuth()
   const [variants, setVariants] = useState<Variant[]>([
     { id: 'A', subject: '', body: '' },
   ])
@@ -188,7 +186,7 @@ export default function ComposeScheduleTab({
       const { data, error } = await supabase.functions.invoke('queue-builder', {
         body: {
           campaign_id: campaign.id,
-          user_id: user?.id,
+          user_id: undefined,
           recipients: recipientEmails,
           variants,
           prospect_data: prospectDataMap,

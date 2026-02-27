@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
-import { useAuth } from '../contexts/AuthContext'
 import Papa from 'papaparse'
 import {
   Plus,
@@ -71,7 +70,6 @@ function FollowupStatusLine({ followups }: { followups: CampaignFollowup[] }) {
 }
 
 export default function Campaigns() {
-  const { user } = useAuth()
   const [campaigns, setCampaigns] = useState<Campaign[]>([])
   const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(null)
   const [newCampaignName, setNewCampaignName] = useState('')
@@ -198,7 +196,7 @@ export default function Campaigns() {
       .from('campaigns')
       .insert({
         name: newCampaignName.trim(),
-        user_id: user.id,
+        user_id: undefined,
         is_active: false,
         scheduled_status: 'draft',
         scheduled_count: 0,
@@ -286,7 +284,7 @@ export default function Campaigns() {
         .from('campaigns')
         .insert({
           name: `${campaign.name} (copy)`,
-          user_id: user.id,
+          user_id: undefined,
           is_active: false,
         })
         .select()
@@ -373,7 +371,7 @@ export default function Campaigns() {
               })
               .map((row: any) => ({
                 email: row[emailCol]?.trim(),
-                user_id: user?.id,
+                user_id: undefined,
                 first_name:
                   row[fuzzyMatchColumn(headers, 'first_name') || ''] || null,
                 business_name:

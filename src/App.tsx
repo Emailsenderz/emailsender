@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom'
 import { Home, Users, Mail, Layers } from 'lucide-react'
-import { AuthProvider } from './contexts/AuthContext'
 import Dashboard from './pages/Dashboard'
 import Campaigns from './pages/Campaigns'
 import Prospects from './pages/Prospects'
@@ -60,16 +59,14 @@ function Layout({ children }: { children: React.ReactNode }) {
 function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/campaigns" element={<Campaigns />} />
-            <Route path="/prospects" element={<Prospects />} />
-            <Route path="/emails" element={<Emails />} />
-          </Routes>
-        </Layout>
-      </AuthProvider>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/campaigns" element={<Campaigns />} />
+          <Route path="/prospects" element={<Prospects />} />
+          <Route path="/emails" element={<Emails />} />
+        </Routes>
+      </Layout>
     </BrowserRouter>
   )
 }

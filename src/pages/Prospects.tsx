@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
-import { useAuth } from '../contexts/AuthContext'
 import Papa from 'papaparse'
 import {
   Trash2,
@@ -26,7 +25,6 @@ interface Prospect {
 }
 
 export default function Prospects() {
-  const { user } = useAuth()
   const [prospects, setProspects] = useState<Prospect[]>([])
   const [loading, setLoading] = useState(true)
   const [uploading, setUploading] = useState(false)
@@ -99,7 +97,7 @@ export default function Prospects() {
               })
               .map((row: any) => ({
                 email: row[emailCol]?.trim(),
-                user_id: user?.id,
+                user_id: undefined,
                 first_name: row[fuzzyMatchColumn(headers, 'first_name') || ''] || null,
                 business_name: row[fuzzyMatchColumn(headers, 'business_name') || ''] || null,
                 company: row[fuzzyMatchColumn(headers, 'company') || ''] || null,

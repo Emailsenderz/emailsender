@@ -67,7 +67,6 @@ export default function Dashboard() {
     setSendDetails(null)
     try {
       const { error } = await supabase.from('emails').insert({
-        campaign_id: '00000000-0000-0000-0000-000000000000',
         to_email: testEmail.to,
         subject: testEmail.subject,
         body: testEmail.body,
